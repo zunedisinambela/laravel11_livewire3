@@ -23,7 +23,7 @@
   </div>
 
   <div class="card shadow">
-    <div class="table-responsive">
+    <div class="card-body mt-4 table-responsive">
       <table class="table table-striped">
         <thead>
           <th>#</th>
@@ -37,8 +37,9 @@
           @forelse($posts as $post)
           <tr>
             <td>{{ $loop->iteration }}</td>
-            <td> <img src="{{ Storage::url($post->featured_image) }}" class="img-fluid" width="250px" height="250px" alt=""></td>
-            <td>{{ $post->title }}</td>
+            <td> <a wire:navigate href="{{ route('posts.view', $post->id) }}" > <img src="{{ Storage::url($post->featured_image) }}" class="img-fluid" width="250px" alt=""></a></td>
+            <img/>
+            <td> <a class="text-docaration-none" wire:navigate href="{{ route('posts.view', $post->id) }}">{{ $post->title }}</a></td>
             <td>{{ $post->content }}</td>
             <td>
               <p><small><strong>Posted: </strong>{{ \Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</small></p>
@@ -53,6 +54,7 @@
           @endforelse
         </tbody>
       </table>
+      {{ $posts->links() }}
     </div>
   </div>
 </div>

@@ -10,6 +10,8 @@ use Livewire\Component;
 class PostForm extends Component
 {
     use WithFileUploads;
+    public $post = null;
+    public $isView = false;
 
     #[Validate('required', message: 'Post title wajib di isi !')]
     #[Validate('min:3', message: 'Post title minimum 3 karakter')]
@@ -26,6 +28,16 @@ class PostForm extends Component
     #[Validate('mimes:jpg,jpeg,png,svg,bmp,webp,gif', message: 'Featured image harus berformat jpg, jpeg, png')]
     #[Validate('max:2048', message: 'Featured image tidak boleh lebih dari 2MB')]
     public $featuredImage;
+
+    public function mount(Post $post)
+    {
+        $this->isView = request()->routeIs('posts.view');
+        if($post->id){
+            $this->post = $post;
+            $this->title = $post->title;
+            $this->content = $post->content;
+        }
+    }
 
     public function savePost()
     {

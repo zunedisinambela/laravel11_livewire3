@@ -4,18 +4,16 @@ namespace App\Livewire;
 
 use App\Models\Post;
 use Livewire\Component;
+use Livewire\WithPagination;
+use Livewire\WithoutUrlPagination;
 
 class PostList extends Component
 {
-    public $posts;
-
-    public function mount()
-    {
-        $this->posts = Post::all();
-    }
+    use WithPagination, WithoutUrlPagination;
 
     public function render()
     {
-        return view('livewire.post-list');
+        $posts = Post::paginate(2);
+        return view('livewire.post-list', compact('posts'));
     }
 }
